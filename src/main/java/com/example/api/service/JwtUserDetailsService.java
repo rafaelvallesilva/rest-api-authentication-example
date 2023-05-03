@@ -1,6 +1,7 @@
 package com.example.api.service;
 
 import com.example.api.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -15,7 +16,13 @@ import java.util.List;
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 
-    final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
+
+//    public JwtUserDetailsService(UserRepository userRepository) {
+//        this.userRepository = userRepository;
+//    }
+
 
     public JwtUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -23,7 +30,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        com.example.api.model.User user = userRepository.findUserByUsername(username);
+        com.example.api.model.User user = userRepository.findByUserName(username);
         List<GrantedAuthority> authorityList = new ArrayList<>();
         authorityList.add(new SimpleGrantedAuthority("USER_ROLE"));
         return new User(user.getUserName(), user.getPassword(), authorityList);

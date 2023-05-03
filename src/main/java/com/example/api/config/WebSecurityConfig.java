@@ -24,7 +24,9 @@ import java.util.Map;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
     private final UserDetailsService jwtUserDetailsService;
+    @Autowired
     private final JwtRequestFilter jwtRequestFilter;
 
     public WebSecurityConfig(UserDetailsService jwtUserDetailsService, JwtRequestFilter jwtRequestFilter) {
